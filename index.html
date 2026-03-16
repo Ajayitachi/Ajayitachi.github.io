@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ajay M — Game Designer & Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #ffffff;
+      --white-60: rgba(255,255,255,0.6);
+      --white-70: rgba(255,255,255,0.7);
+      --white-80: rgba(255,255,255,0.8);
+      --white-10: rgba(255,255,255,0.1);
+      --white-20: rgba(255,255,255,0.2);
+      --white-30: rgba(255,255,255,0.3);
+      --black: #000000;
+      --glass: rgba(0,0,0,0.4);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: var(--font-body);
+      overflow-x: hidden;
+    }
+
+    /* ── BG VIDEO ── */
+    #bg-video {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    #bg-video iframe {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 177.78vh; height: 56.25vw;
+      min-width: 100%; min-height: 100%;
+      transform: translate(-50%, -50%);
+      border: none;
+    }
+    #bg-video::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.3);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--white-20);
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      color: #fff;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--white-80);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* mobile menu */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: #fff;
+      transition: all 0.3s;
+    }
+    .mobile-nav {
+      display: none;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--white-20);
+      padding: 1rem 0;
+    }
+    .mobile-nav.open { display: block; }
+    .mobile-nav a {
+      display: block;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--white-80);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .mobile-nav a:hover { background: var(--white-10); color: #fff; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 10; }
+
+    /* ── HERO ── */
+    #home {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
+    .hero-content { position: relative; z-index: 10; }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 12vw, 9rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      font-weight: 300;
+      margin-bottom: 0.75rem;
+    }
+    .hero-tagline {
+      font-size: 0.8rem;
+      color: var(--white-70);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .hero-btns {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 0.85rem 2rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 500;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .btn-solid {
+      background: #fff;
+      color: #000;
+      border: none;
+    }
+    .btn-solid:hover { background: #e5e5e5; }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.7);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 1.8s infinite;
+    }
+    .scroll-hint-ring {
+      width: 1.5rem; height: 2.5rem;
+      border: 2px solid var(--white-50, rgba(255,255,255,0.5));
+      border-radius: 999px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0.3rem;
+    }
+    .scroll-hint-dot {
+      width: 0.25rem; height: 0.5rem;
+      background: var(--white-50, rgba(255,255,255,0.5));
+      border-radius: 999px;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ── GLASS CARD ── */
+    .glass-card {
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--white-10);
+      border-radius: 1.5rem;
+    }
+
+    /* ── ABOUT ── */
+    #about { padding: 6rem 1.5rem; }
+    .about-inner { max-width: 1280px; margin: 0 auto; }
+    .about-card { padding: 3rem; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    .section-label {
+      font-size: 0.75rem;
+      color: var(--white-60);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      letter-spacing: 0.03em;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .stat-card {
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--white-10);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .stat-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+    .stat-number { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 0.05em; }
+    .stat-label { font-size: 0.8rem; color: var(--white-70); margin-top: 0.2rem; }
+    .portrait {
+      aspect-ratio: 4/5;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      background: #222;
+    }
+    .portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bio-text {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--white-80);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── BACKSTORY ── */
+    #backstory { padding: 6rem 1.5rem; }
+    .backstory-inner { max-width: 56rem; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 4rem; }
+
+    .timeline { position: relative; padding: 0; }
+
+    /* center vertical line */
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: rgba(255,255,255,0.3);
+      transform: translateX(-50%);
+    }
+    @media (max-width: 767px) {
+      .timeline::before { left: 1rem; }
+    }
+
+    .timeline-items { display: flex; flex-direction: column; gap: 0; }
+
+    .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 120px;
+      align-items: center;
+      margin-bottom: 3rem;
+    }
+    @media (max-width: 767px) {
+      .timeline-item { grid-template-columns: 1fr; padding-left: 3rem; }
+    }
+
+    /* the white dot */
+    .timeline-dot {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 14px; height: 14px;
+      background: #fff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+    @media (max-width: 767px) {
+      .timeline-dot { left: 1rem; top: 1.5rem; transform: translate(-50%, 0); }
+    }
+
+    /* LEFT side content (odd items) */
+    .timeline-left {
+      padding-right: 3.5rem;
+      text-align: right;
+    }
+    /* RIGHT side content (even items) */
+    .timeline-right {
+      padding-left: 3.5rem;
+      text-align: left;
+    }
+    /* empty cell */
+    .timeline-empty { display: block; }
+    @media (max-width: 767px) {
+      .timeline-left, .timeline-right { padding: 0; text-align: left; }
+      .timeline-empty { display: none; }
+    }
+
+    .timeline-year { font-size: 0.78rem; color: var(--white-60); font-weight: 500; letter-spacing: 0.05em; }
+    .timeline-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-top: 0.2rem;
+      color: #fff;
+    }
+    .timeline-desc {
+      font-size: 0.88rem;
+      color: var(--white-70);
+      margin-top: 0.4rem;
+      line-height: 1.65;
+    }
+
+    /* ── PROJECTS ── */
+    #projects { padding: 6rem 1.5rem; }
+    .projects-inner { max-width: 1280px; margin: 0 auto; }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .project-card {
+      cursor: pointer;
+    }
+    .project-thumb {
+      aspect-ratio: 4/3;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: #1a1a1a;
+      margin-bottom: 1rem;
+    }
+    .project-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .project-card:hover .project-thumb img { transform: scale(1.05); }
+    .project-cat {
+      font-size: 0.75rem;
+      color: var(--white-60);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .project-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 0.25rem;
+    }
+    .projects-cta { text-align: center; margin-top: 3rem; }
+
+    /* ── SKILLS ── */
+    #skills { padding: 6rem 1.5rem; }
+    .skills-inner { max-width: 1280px; margin: 0 auto; }
+    .skills-card { padding: 3rem; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .skills-img { display: none; }
+    }
+    .skills-img {
+      aspect-ratio: 3/4;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: #222;
+    }
+    .skills-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .skill-group { margin-bottom: 2.5rem; }
+    .skill-group:last-child { margin-bottom: 0; }
+    .skill-group-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.25rem;
+    }
+    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .skill-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--white-80);
+    }
+    .skill-dot {
+      width: 0.5rem; height: 0.5rem;
+      background: #fff;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── CTA ── */
+    #cta { padding: 6rem 1.5rem; }
+    .cta-inner { max-width: 56rem; margin: 0 auto; text-align: center; }
+    .cta-card { padding: 4rem; }
+    .cta-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem); letter-spacing: 0.03em; margin-bottom: 1rem; }
+    .cta-sub { font-size: 1rem; color: var(--white-70); margin-bottom: 2rem; max-width: 36rem; margin-left: auto; margin-right: auto; }
+
+    /* ── CONTACT ── */
+    #contact { padding: 6rem 1.5rem; }
+    .contact-inner { max-width: 56rem; margin: 0 auto; }
+    .contact-card { padding: 3rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group:last-of-type { margin-bottom: 0; }
+    label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.5rem; }
+    input, textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--white-20);
+      border-radius: 0.75rem;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.35); }
+    input:focus, textarea:focus {
+      border-color: var(--white-40, rgba(255,255,255,0.4));
+      background: rgba(255,255,255,0.08);
+    }
+    textarea { resize: none; }
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: #fff;
+      color: #000;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: #e5e5e5; }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 2rem 1.5rem;
+      border-top: 1px solid var(--white-10);
+    }
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    @media (min-width: 640px) { .footer-inner { flex-direction: row; } }
+    .footer-logo { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 0.05em; }
+    .footer-copy { font-size: 0.8rem; color: #666; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.85rem;
+      color: #666;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+  <!-- BG VIDEO -->
+  <div id="bg-video">
+    <iframe
+      src="https://player.vimeo.com/video/1147196977?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
+      allow="autoplay; fullscreen"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">AJAY M</a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#home"     onclick="closeMobile()">Home</a>
+      <a href="#about"    onclick="closeMobile()">About</a>
+      <a href="#projects" onclick="closeMobile()">Projects</a>
+      <a href="#skills"   onclick="closeMobile()">Skills</a>
+      <a href="#contact"  onclick="closeMobile()">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-content">
+      <h1 class="hero-name">AJAY M</h1>
+      <p class="hero-sub">Game Designer, Game Developer &amp; UI/UX Designer</p>
+      <p class="hero-tagline">Designing Interactive Gameplay, Immersive Worlds &amp; Intuitive Interfaces</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-solid">Projects</a>
+        <a href="#contact"  class="btn btn-outline">Contact</a>
+        <a href="https://drive.google.com/file/d/1Doy4ZxzzbAyNTWRC8MTnYGeupUYTY1lx/view?usp=sharing"
+           target="_blank" rel="noopener" class="btn btn-outline">Resume</a>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-hint-ring"><div class="scroll-hint-dot"></div></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="glass-card about-card">
+        <div class="about-grid">
+          <!-- left: stats -->
+          <div>
+            <p class="section-label">About Me</p>
+            <h2 class="section-title">Creating Interactive<br>Game Experiences</h2>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-number">5+</div>
+                <div class="stat-label">Game &amp; UI Projects</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">💼</div>
+                <div class="stat-number">3+</div>
+                <div class="stat-label">Unity Game Prototypes</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">🔧</div>
+                <div class="stat-number">2+</div>
+                <div class="stat-label">UI/UX &amp; Graphic Design</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-number">2+</div>
+                <div class="stat-label">Years Game Design Student</div>
+              </div>
+            </div>
+          </div>
+          <!-- right: portrait + bio -->
+          <div>
+            <div class="portrait" style="margin-bottom:2rem;">
+              <img src="https://i.postimg.cc/nzNVVdF9/my-photo.jpg" alt="Ajay M Portrait" />
+            </div>
+            <p class="bio-text">
+              My name is Ajay M, a dedicated game designer and Unity developer with hands-on experience
+              in game design, level design, scripting, and visual effects. I enjoy combining creativity
+              with technical expertise to create immersive, story-focused gameplay experiences. From
+              designing engaging puzzles to building expansive worlds, I aim to tell meaningful stories
+              through player interaction.
+            </p>
+            <a href="#contact" class="btn btn-solid">Contact Me →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BACKSTORY -->
+  <section id="backstory">
+    <div class="backstory-inner">
+      <div class="section-header">
+        <p class="section-label">My Learning Journey</p>
+        <h2 class="section-title">Backstory</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-items">
+
+          <!-- item 1: content LEFT, empty RIGHT -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-left">
+              <span class="timeline-year">2024</span>
+              <h3 class="timeline-title">Started Game Design</h3>
+              <p class="timeline-desc">Began learning the fundamentals of Game Design, UI/UX principles, and visual design during my academic journey.</p>
+            </div>
+            <div class="timeline-empty"></div>
+          </div>
+
+          <!-- item 2: empty LEFT, content RIGHT -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-empty"></div>
+            <div class="timeline-right">
+              <span class="timeline-year">2024</span>
+              <h3 class="timeline-title">Unity &amp; Gameplay Design</h3>
+              <p class="timeline-desc">Developed playable Unity projects focusing on player movement, game mechanics, level layout, and UI systems.</p>
+            </div>
+          </div>
+
+          <!-- item 3: content LEFT, empty RIGHT -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-left">
+              <span class="timeline-year">2025</span>
+              <h3 class="timeline-title">AR/VR &amp; Design Projects</h3>
+              <p class="timeline-desc">Worked on marker-based AR applications and UI/UX projects, including landing pages and game interfaces.</p>
+            </div>
+            <div class="timeline-empty"></div>
+          </div>
+
+          <!-- item 4: empty LEFT, content RIGHT -->
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-empty"></div>
+            <div class="timeline-right">
+              <span class="timeline-year">2025</span>
+              <h3 class="timeline-title">Current Focus</h3>
+              <p class="timeline-desc">Improving gameplay design, prototyping ideas in Unity, and building a strong game design portfolio.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="projects-inner">
+      <div class="section-header">
+        <p class="section-label">Portfolio</p>
+        <h2 class="section-title">My Projects</h2>
+        <p style="color:var(--white-70);max-width:40rem;margin:0 auto;">
+          A selection of my work across game development, UI/UX design, AR/VR, and interactive experiences.
+        </p>
+      </div>
+      <div class="projects-grid">
+
+        <div class="project-card" onclick="window.open('https://github.com/Ajayitachi/ZombieShooting.git','_blank')">
+          <div class="project-thumb">
+            <img src="https://i.postimg.cc/mDJPyS78/Whats-App-Image-2025-10-30-at-20-49-25-a45a3ed7.jpg" alt="Zombie Shooting" />
+          </div>
+          <p class="project-cat">3D Game</p>
+          <h3 class="project-name">Zombie Shooting</h3>
+        </div>
+
+        <div class="project-card" onclick="window.open('https://github.com/Ajayitachi/musicplayerui.git','_blank')">
+          <div class="project-thumb">
+            <img src="https://i.postimg.cc/TYy9xkk1/starting.jpg" alt="Music Player" />
+          </div>
+          <p class="project-cat">UI/UX Design</p>
+          <h3 class="project-name">Music Player</h3>
+        </div>
+
+        <div class="project-card" onclick="window.open('https://github.com/Ajayitachi/Netflix-Landing-Page.git','_blank')">
+          <div class="project-thumb">
+            <img src="https://i.postimg.cc/5yjNTQSt/Whats-App-Image-2025-12-18-at-12-04-41.jpg" alt="Netflix Landing Page" />
+          </div>
+          <p class="project-cat">UI Design</p>
+          <h3 class="project-name">Netflix Landing Page</h3>
+        </div>
+
+        <div class="project-card" onclick="window.open('https://github.com/Ajayitachi/2D-Game-.git','_blank')">
+          <div class="project-thumb">
+            <img src="https://th.bing.com/th/id/OIP.PTRZqEk9SzhjmhkKsC098QHaEK?w=289&h=180&c=7&r=0&o=7&cb=ucfimg2&dpr=1.3&pid=1.7&rm=3&ucfimg=1" alt="2D Game" />
+          </div>
+          <p class="project-cat">2D Game</p>
+          <h3 class="project-name">2D Game</h3>
+        </div>
+
+        <div class="project-card" onclick="window.open('https://github.com/Ajayitachi/Virtual-Reality-And-Augmented-Reality.git','_blank')">
+          <div class="project-thumb">
+            <img src="https://static.vecteezy.com/system/resources/previews/029/111/423/non_2x/immersive-vr-experience-exploring-virtual-reality-with-vr-glasses-on-color-full-background-created-with-generative-ai-free-photo.jpeg" alt="AR" />
+          </div>
+          <p class="project-cat">AR</p>
+          <h3 class="project-name">AR</h3>
+        </div>
+
+        <div class="project-card" onclick="window.open('https://github.com/Ajayitachi/Virtual-Reality-And-Augmented-Reality.git','_blank')">
+          <div class="project-thumb">
+            <img src="https://th.bing.com/th/id/OIP._bi8Yt0YOy6CqIo7wYiUxQHaEK?o=7&cb=ucfimg2&rm=3&ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3" alt="VR" />
+          </div>
+          <p class="project-cat">VR</p>
+          <h3 class="project-name">VR</h3>
+        </div>
+
+      </div>
+      <div class="projects-cta">
+        <a href="https://github.com/Ajayitachi" target="_blank" rel="noopener" class="btn btn-solid">
+          View All Projects →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="skills-inner">
+      <div class="section-header">
+        <p class="section-label">Expertise</p>
+        <h2 class="section-title">Skills</h2>
+      </div>
+      <div class="glass-card skills-card">
+        <div class="skills-grid">
+          <div class="skills-img">
+            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=500&q=80" alt="Design Work" />
+          </div>
+          <div>
+            <div class="skill-group">
+              <h3 class="skill-group-title">Game Design Skills</h3>
+              <ul class="skill-list">
+                <li><span class="skill-dot"></span>Gameplay Mechanics</li>
+                <li><span class="skill-dot"></span>Level Design Basics</li>
+                <li><span class="skill-dot"></span>Player Experience Design</li>
+                <li><span class="skill-dot"></span>Rapid Prototyping</li>
+              </ul>
+            </div>
+            <div class="skill-group">
+              <h3 class="skill-group-title">Tools &amp; Software</h3>
+              <ul class="skill-list">
+                <li><span class="skill-dot"></span>Unity Engine</li>
+                <li><span class="skill-dot"></span>Figma</li>
+                <li><span class="skill-dot"></span>Canva</li>
+                <li><span class="skill-dot"></span>Premiere Pro</li>
+                <li><span class="skill-dot"></span>Miro</li>
+              </ul>
+            </div>
+            <div class="skill-group">
+              <h3 class="skill-group-title">UI/UX &amp; Design</h3>
+              <ul class="skill-list">
+                <li><span class="skill-dot"></span>UI/UX Principles</li>
+                <li><span class="skill-dot"></span>Typography &amp; Color Theory</li>
+                <li><span class="skill-dot"></span>Layout &amp; Composition</li>
+                <li><span class="skill-dot"></span>Graphic Design Basics</li>
+              </ul>
+            </div>
+          </div>
+          <div class="skills-img">
+            <img src="https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=500&q=80" alt="Creative Work" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-inner">
+      <div class="glass-card cta-card">
+        <h2 class="cta-title">Check Out My Projects</h2>
+        <p class="cta-sub">
+          Explore my academic and personal projects focused on Game Design, UI/UX, and Unity development.
+        </p>
+        <a href="#projects" class="btn btn-solid">Projects →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-header">
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title">Contact</h2>
+        <p style="color:var(--white-70);max-width:38rem;margin:0 auto;">
+          I'm currently looking for internship or entry-level opportunities in Game Design.
+          If you're interested in my work or would like to collaborate, feel free to contact me.
+        </p>
+      </div>
+      <div class="glass-card contact-card">
+        <form action="https://formspree.io/f/mlgreqkk" method="POST">
+          <div class="form-row">
+            <div>
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="Project inquiry" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">AJAY M</span>
+      <p class="footer-copy">© 2025 Ajay M. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="https://github.com/Ajayitachi" target="_blank" rel="noopener">Github</a>
+        <a href="mailto:ajay.m.itachi07@gmail.com">Mail</a>
+        <a href="https://www.linkedin.com/in/ajay-m-itachi07" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Mobile menu toggle ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    hamburger.addEventListener('click', () => {
+      mobileNav.classList.toggle('open');
+    });
+    function closeMobile() {
+      mobileNav.classList.remove('open');
+    }
+
+    // ── Smooth scroll for ALL anchor links ──
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href').slice(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          e.preventDefault();
+          const navHeight = document.querySelector('nav').offsetHeight;
+          const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+        closeMobile();
+      });
+    });
+
+    // ── Contact form: AJAX submit via Formspree + success toast ──
+    const form = document.querySelector('form[action*="formspree"]');
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const btn = form.querySelector('.btn-submit');
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok) {
+            form.reset();
+            showToast('✅ Message sent! I\'ll get back to you soon.');
+          } else {
+            showToast('❌ Something went wrong. Please try again.');
+          }
+        } catch {
+          showToast('❌ Network error. Please try again.');
+        }
+
+        btn.textContent = 'Send Message';
+        btn.disabled = false;
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.createElement('div');
+      toast.textContent = msg;
+      toast.style.cssText = `
+        position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+        background: rgba(0,0,0,0.85); color: #fff;
+        padding: 1rem 2rem; border-radius: 0.75rem;
+        border: 1px solid rgba(255,255,255,0.2);
+        font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+        z-index: 9999; backdrop-filter: blur(10px);
+        animation: fadeInUp 0.3s ease;
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 4000);
+    }
+  </script>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+  </style>
