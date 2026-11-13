@@ -1,0 +1,1 @@
+var e={rings:34,tubeRadius:.32,spacing:.64,radialSegments:64,barrelRoll:Math.PI/30},t={metalness:.2,roughness:.35,clearcoat:.6,clearcoatRoughness:.25,envMapIntensity:.35},n={duration:.9,stagger:.08,ease:[.16,1,.3,1]};function r(e){return e<.17?`intro`:e<.5?`worlds`:`hidden`}export{r as i,t as n,n as r,e as t};
